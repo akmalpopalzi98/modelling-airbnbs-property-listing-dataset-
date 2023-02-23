@@ -8,7 +8,7 @@
 
 - Once extracted, both image and tabular data underwent preprocessing steps.
 
-The prepare_tabular_data.py file contains code which cleans the tabular data and removes and null/errors in the dataset. This file also helps deal with formatting any text data that may reside within the dataset.
+The prepare_tabular_data.py file contains code which cleans the tabular data and removes any nulls/errors in the dataset. This file also helps deal with formatting any text data that currently reside within the dataset.
 
 Image data was formated so that all images have the same aspect ratio. Packages such as cv2 and PIL were used to deal with image formatting.
 
