@@ -30,7 +30,7 @@ class AirbnbDataPrep:
            'The space',
            '',
            "  ",
-           " "
+           " ", 
            'Other things to note',
            'Guest access']
         
