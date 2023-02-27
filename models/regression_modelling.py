@@ -4,8 +4,9 @@ import numpy as np
 from sklearn.linear_model import SGDRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV
 
 
 def read_data(target_label = 'Price_Night'):
@@ -35,14 +36,16 @@ def get_scores(model,X_train,X_test,y_train,y_test):
     print(f'test RMSE score : {RMSE}\ntrain RMSE score {RMSE_training}')
 
 
+def tune_regression_model_hyperparameters(model,X_train,y_train):
+    param_grid = {"sgdregressor__alpha" : [0.00001, 0.0001, 0.001, 0.01],    "sgdregressor__max_iter" : [1000, 1500, 2000, 5000, 10000],    "sgdregressor__eta0" : [0.001, 0.01, 0.1]  }
+    gs = GridSearchCV(estimator=model,
+                      param_grid=param_grid,
+                      scoring = 'r2',
+                      cv = 7,
+                      refit = True)
+    gs.fit(X_train,y_train)
+    return gs.best_score_,gs.best_params_,gs.best_estimator_
     
-
-
-
-
-
-
-
 
 
 pipe_SGD = make_pipeline(StandardScaler(),
@@ -50,10 +53,6 @@ pipe_SGD = make_pipeline(StandardScaler(),
     
 
 
-if __name__ == '__main__':
-    features,target = read_data('Price_Night')
-    X_train,X_test,y_train,y_test = split_data(features,target)
-    get_scores(pipe_SGD,X_train,X_test,y_train,y_test)
 
 
 
